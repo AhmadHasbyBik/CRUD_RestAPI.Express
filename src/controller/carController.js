@@ -36,10 +36,17 @@ const getCarById = async (req,res) => {
 const createCar = async (req,res) => {
     const {body} = req;
 
+    if (!body.name || !body.brand || !body.model){
+        res.status(400).json({
+            message: "Unvalid Data",
+            data: null
+        })
+    }
+
     try {
         await carModel.createCar(body);
-        res.json({
-            message: "Create Success",
+        res.status(201).json({
+            message: "Create Car Success",
             data: body
         })
     } catch (error) {
